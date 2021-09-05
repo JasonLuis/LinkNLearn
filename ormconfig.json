@@ -1,0 +1,17 @@
+{
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "root",
+   "password": "root",
+   "database": "linklearn",
+   "entities": [
+      "src/app/models/*.ts"
+   ],
+   "migrations": [
+      "src/database/migration/**/*.ts"
+   ],
+   "cli": {
+      "migrationsDir": "src/database/migration"
+   }
+}

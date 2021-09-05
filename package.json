@@ -1,0 +1,28 @@
+{
+   "name": "linklearn",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "devDependencies": {
+      "@types/bcryptjs": "^2.4.2",
+      "@types/express": "^4.17.13",
+      "@types/jsonwebtoken": "^8.5.5",
+      "@types/node": "^8.0.29",
+      "nodemon": "^2.0.12",
+      "ts-node": "3.3.0",
+      "typescript": "3.3.3333"
+   },
+   "dependencies": {
+      "bcryptjs": "^2.4.3",
+      "body-parser": "^1.18.1",
+      "express": "^4.15.4",
+      "jsonwebtoken": "^8.5.1",
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "0.2.37"
+   },
+   "scripts": {
+      "dev": "nodemon src/index.ts",
+      "typeorm": "npx ts-node ./node_modules/typeorm/cli.js",
+      "start": "ts-node src/index.ts"
+   }
+}
