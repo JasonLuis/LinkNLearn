@@ -39,7 +39,7 @@ export const updateStudent = async(request: Request, response: Response) => {
         cpf: cpf,
     });
     
-    console.log(emailExists);
+    //console.log(emailExists);
     if(emailExists || cpfExists){
         return response.sendStatus(409).json({
             message: "CPF or email used by another user"

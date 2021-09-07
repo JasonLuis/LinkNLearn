@@ -7,7 +7,7 @@ interface TokenID {
     exp: number;
 }
 const key = process.env.JWT_KEY
-export default function authStudentMiddleware(
+export default function authUserMiddleware(
     request: Request, response: Response, next: NextFunction
 ){
 
