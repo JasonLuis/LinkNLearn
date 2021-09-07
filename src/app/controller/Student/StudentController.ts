@@ -1,16 +1,15 @@
 import { getRepository, Not } from "typeorm";
-import { Students }  from "../models/Students";
-import { Request, response, Response } from "express";
-import { request } from "http";
+import { Student }  from "../../models/Student";
+import { Request, Response } from "express";
 
 //função so para teste
 export const listStudents = async(request: Request, response: Response) => {
-    const students = await getRepository(Students).find();
+    const students = await getRepository(Student).find();
     return response.json(students);
 }
 
 export const saveUserStudent = async(request: Request, response: Response) => {
-    const repository = await getRepository(Students)
+    const repository = await getRepository(Student)
     const { cpf, email } = request.body;
 
     const emailExists = await repository.findOne({ where: {email} });
@@ -27,7 +26,7 @@ export const saveUserStudent = async(request: Request, response: Response) => {
 }
 
 export const updateStudent = async(request: Request, response: Response) => {
-    const repository = await getRepository(Students)
+    const repository = await getRepository(Student)
     const id  = request.userId;
     const { cpf, email } = request.body;
     

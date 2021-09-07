@@ -1,8 +1,8 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from 'bcryptjs';
 
-@Entity()
-export class Students {
+@Entity('students')
+export class Student {
 
     @PrimaryGeneratedColumn('uuid')
     id_students: string;

@@ -3,11 +3,11 @@ import { getRepository } from "typeorm";
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
-import { Students } from "../models/Students";
+import { Student } from "../../models/Student";
 const key = process.env.JWT_KEY
 class AuthStudentUserController {
     async authenticate(request: Request, response: Response) {
-        const repository = getRepository(Students);
+        const repository = getRepository(Student);
         const { email, password } = request.body;
 
         const user = await repository.findOne({ where: { email } });
