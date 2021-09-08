@@ -1,5 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from 'bcryptjs';
+import { StudentsCourses } from "./StudentsCourses";
 
 @Entity('students')
 export class Student {
@@ -40,4 +41,6 @@ export class Student {
     @Column()
     educationLevel: string;
 
+    @OneToMany(type => StudentsCourses, student => Student)
+    studentsCourses: StudentsCourses[];
 }

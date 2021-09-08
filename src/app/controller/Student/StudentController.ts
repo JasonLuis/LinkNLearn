@@ -1,6 +1,8 @@
 import { getRepository, Not } from "typeorm";
 import { Student }  from "../../models/Student";
+import { StudentsCourses } from "../../models/StudentsCourses";
 import { Request, Response } from "express";
+import { request } from "http";
 
 //função so para teste
 export const listStudents = async(request: Request, response: Response) => {
@@ -59,4 +61,27 @@ export const updateStudent = async(request: Request, response: Response) => {
     return response.status(404).json({
         message: "User not found",
     });
+}
+
+export const buyCourses = async(request: Request, response: Response) => {
+    const repository = await getRepository(StudentsCourses)
+    const id  = request.userId;
+    const { id_course } = request.body;
+    const body = {
+        student: id,
+        course: id_course,
+    };
+
+    const buy = repository.create(body as any);
+    const buyCourses = await repository.save(buy);
+
+    return response.json(buyCourses);
+}
+
+export const listAllByCourses = async(request: Request, response: Response) => {
+    const repository = await getRepository(StudentsCourses)
+    const id  = request.userId;
+    const courses = await repository.find({where: {student:  id}, relations: ["course"]});
+
+    return response.json(courses);
 }
