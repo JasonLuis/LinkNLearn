@@ -5,6 +5,7 @@ import { deletePlan, listPlans, savePlans, updatePlan } from './app/controller/P
 import { listTeachers, saveTeacher, updateTeacher } from "./app/controller/Teacher/TeacherController";
 import AuthStudentUserController from './app/controller/Student/AuthStudentUserController';
 import AuthTeacherUserController from './app/controller/Teacher/AuthTeacherUserController';
+import { listCourses, saveCourse } from './app/controller/Course/CourseController';
 
 const routes = Router();
 
@@ -33,4 +34,9 @@ routes.get('/teacher/listAll', listTeachers);
 routes.post('/teacher/create', saveTeacher);
 routes.post('/teacher/auth', AuthTeacherUserController.authenticate);
 routes.put('/teacher/update', authUserMiddleware, updateTeacher);
+
+
+routes.get('/courses/listAll', listCourses);
+routes.post('/courses/create', authUserMiddleware, saveCourse);
+
 export default routes;

@@ -31,6 +31,8 @@ export class CreatePlansTable1630968846653 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropTable('plans');
+        await queryRunner.query('DROP EXTENSION "uuid-ossp"');
     }
 
 }

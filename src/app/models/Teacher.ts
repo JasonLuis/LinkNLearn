@@ -1,6 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from 'bcryptjs';
 import { Plan } from "./Plan";
+import { Course } from "./Course";
 
 @Entity('teachers')
 export class Teacher{
@@ -55,4 +56,9 @@ export class Teacher{
     @ManyToOne(type => Plan, teachers => Teacher)
     @JoinColumn({name: 'id_plan'})
     plan: Plan;
+
+    @OneToMany(type => Course, teacher => Teacher)
+    Course: Course[];
 }
+
+

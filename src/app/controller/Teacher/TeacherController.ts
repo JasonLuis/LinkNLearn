@@ -60,3 +60,5 @@ export const updateTeacher = async(req: Request, res: Response) => {
         message: "User not found",
     });
 }
+
+
