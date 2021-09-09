@@ -48,7 +48,7 @@ export class CreateCoursesTable1631057527098 implements MigrationInterface {
                 },
                 {
                     name: 'price',
-                    type: 'float',
+                    type: 'numeric(10,2)',
                 },
                 {
                     name: 'platform',

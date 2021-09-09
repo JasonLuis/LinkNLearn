@@ -19,6 +19,7 @@ export class CreateStudentCoursesTable1631140538403 implements MigrationInterfac
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropTable('students_courses');
     }
 
 }

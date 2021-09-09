@@ -1,12 +1,13 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from 'bcryptjs';
 import { StudentsCourses } from "./StudentsCourses";
+import { Feedback } from "./Feedback";
 
 @Entity('students')
 export class Student {
 
     @PrimaryGeneratedColumn('uuid')
-    id_students: string;
+    id_student: string;
 
     @Column()
     name: string;
@@ -43,4 +44,7 @@ export class Student {
 
     @OneToMany(type => StudentsCourses, student => Student)
     studentsCourses: StudentsCourses[];
+
+    @OneToMany(type => Feedback, student => Student)
+    feedback: Feedback[];
 }

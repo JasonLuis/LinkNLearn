@@ -20,6 +20,6 @@ export class StudentsCourses {
     course: Course;
 
     @ManyToOne(type => Student, studentsCourses => StudentsCourses, {primary : true})
-    @JoinColumn({name: 'id_students'})
+    @JoinColumn({name: 'id_student'})
     student: Student;
 }

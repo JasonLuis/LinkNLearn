@@ -33,11 +33,11 @@ export const updateStudent = async(request: Request, response: Response) => {
     const { cpf, email } = request.body;
     
     const emailExists = await repository.findOne({
-        id_students: Not(id),
+        id_student: Not(id),
         email: email,
     });
     const cpfExists = await repository.findOne({
-        id_students: Not(id),
+        id_student: Not(id),
         cpf: cpf,
     });
     

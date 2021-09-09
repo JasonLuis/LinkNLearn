@@ -16,7 +16,7 @@ class AuthStudentUserController {
             return response.sendStatus(401);
         }
 
-        const token = jwt.sign({id: user.id_students}, key, {expiresIn: '1d'});
+        const token = jwt.sign({id: user.id_student}, key, {expiresIn: '1d'});
 
         const isValidPassword = await bcrypt.compare(password, user.password);
 
