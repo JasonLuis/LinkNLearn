@@ -33,8 +33,8 @@ export const createFeedBack = async(request: Request, response: Response) => {
        student: request.userId,
     }
 
-    const create =  repository.create(body as any);
-    const feedback = repository.save(create);
+    const create = await  repository.create(body as any);
+    const feedback = await repository.save(create);
 
 
     return response.json(feedback);

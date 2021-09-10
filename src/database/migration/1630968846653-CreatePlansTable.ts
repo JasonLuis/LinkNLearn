@@ -20,7 +20,7 @@ export class CreatePlansTable1630968846653 implements MigrationInterface {
                 },
                 {
                     name: 'price',
-                    type: 'numeric(10,2)',
+                    type: 'numeric',
                 },
                 {
                     name: 'description',

@@ -12,7 +12,7 @@ export class CreateFeedbackTable1631224538901 implements MigrationInterface {
                 },
                 {
                     name: 'classification',
-                    type: 'numeric(5,2)'
+                    type: 'numeric'
                 }
             ],
         }))
