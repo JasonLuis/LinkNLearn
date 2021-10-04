@@ -1,8 +1,8 @@
 import {Router, Request, Response } from 'express';
 import authUserMiddleware from './app/middlewares/authUserMiddleware';
-import { buyCourses, listAllByCourses, listStudents, saveUserStudent, updateStudent } from './app/controller/Student/StudentController';
+import { buyCourses, getStudentById, listAllByCourses, listStudents, saveUserStudent, updateStudent } from './app/controller/Student/StudentController';
 import { deletePlan, listPlans, savePlans, updatePlan } from './app/controller/Plan/PlanController';
-import { listTeachers, saveTeacher, updateTeacher } from "./app/controller/Teacher/TeacherController";
+import { getTeacherById, listTeachers, saveTeacher, updateTeacher } from "./app/controller/Teacher/TeacherController";
 import AuthStudentUserController from './app/controller/Student/AuthStudentUserController';
 import AuthTeacherUserController from './app/controller/Teacher/AuthTeacherUserController';
 import { listCourses, saveCourse } from './app/controller/Course/CourseController';
@@ -23,6 +23,7 @@ routes.post('/student/auth', AuthStudentUserController.authenticate);
 routes.put('/student/update', authUserMiddleware,updateStudent);
 routes.post('/student/buy',authUserMiddleware, buyCourses);
 routes.get('/student/listCourses',authUserMiddleware, listAllByCourses);
+routes.post('/student/getById',authUserMiddleware, getStudentById);
 
 //Rotas para Tabela Plans
 routes.get('/plan/listAll', listPlans);
@@ -37,7 +38,7 @@ routes.get('/teacher/listAll', listTeachers);
 routes.post('/teacher/create', saveTeacher);
 routes.post('/teacher/auth', AuthTeacherUserController.authenticate);
 routes.put('/teacher/update', authUserMiddleware, updateTeacher);
-
+routes.post('/teacher/getById',authUserMiddleware,getTeacherById);
 
 routes.get('/courses/listAll', listCourses);
 routes.post('/courses/create', authUserMiddleware, saveCourse);

@@ -78,6 +78,14 @@ export const buyCourses = async(request: Request, response: Response) => {
     return response.json(buyCourses);
 }
 
+export const getStudentById = async(request: Request, response: Response) => {
+    const repository = await getRepository(Student);
+    const id = request.userId;
+    const student = await repository.find({where: {id_student: id}});
+
+    return response.json(student);
+}
+
 export const listAllByCourses = async(request: Request, response: Response) => {
     const repository = await getRepository(StudentsCourses)
     const id  = request.userId;
@@ -85,3 +93,4 @@ export const listAllByCourses = async(request: Request, response: Response) => {
 
     return response.json(courses);
 }
+
