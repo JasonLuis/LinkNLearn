@@ -45,6 +45,6 @@ routes.post('/courses/create', authUserMiddleware, saveCourse);
 
 
 // Feedback
-routes.get('/course/feedback', listFeedbackByCourse); //listar
+routes.post('/course/feedback', listFeedbackByCourse); //listar
 routes.post('/course/feedback',authUserMiddleware, createFeedBack);//criar
 export default routes;
