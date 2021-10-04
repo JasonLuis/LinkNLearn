@@ -5,7 +5,7 @@ import { Feedback } from "../../models/Feedback";
 export const listFeedbackByCourse =  async(request: Request, response: Response) => {
     const { course } = request.body;
     const feedback = await getRepository(Feedback).find({where: {course: course},
-         relations: ["course"]});
+         relations: ["course","student"]});
     return response.json(feedback);
 }
 
