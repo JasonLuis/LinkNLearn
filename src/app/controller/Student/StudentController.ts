@@ -2,13 +2,16 @@ import { getRepository, Not } from "typeorm";
 import { Student }  from "../../models/Student";
 import { StudentsCourses } from "../../models/StudentsCourses";
 import { Request, Response } from "express";
-import { request } from "http";
+import * as nodemailer from 'nodemailer';
+import * as bcrypt from 'bcryptjs';
+import * as crypto from "crypto";
 
 //função so para teste
 export const listStudents = async(request: Request, response: Response) => {
     const students = await getRepository(Student).find();
     return response.json(students);
 }
+
 
 export const saveUserStudent = async(request: Request, response: Response) => {
     const repository = await getRepository(Student)
@@ -61,6 +64,59 @@ export const updateStudent = async(request: Request, response: Response) => {
     return response.status(404).json({
         message: "User not found",
     });
+}
+
+export const forgotPassword = async(request: Request, response: Response) => {
+    const { email } = request.body;
+
+    try {
+        
+
+        const user = await getRepository(Student).find({
+            where: {
+                email
+            }
+        })
+
+        const transporter = nodemailer.createTransport({
+            host: "smtp.mailtrap.io",
+            port: 2525,
+            auth: {
+                user: "6eb9921a9fd7a4",
+                pass: "21bae478f32eac"
+            }
+        })
+
+        const newPassword = crypto.randomBytes(4).toString('HEX')
+
+        transporter.sendMail({
+            from: 'Administrador <457f7a1349-e88ec1@inbox.mailtrap.io>',
+            to: email,
+            subject: 'Recuperação de Senha',
+            html: `<p>Olá, sua nova senha para acessar o sistema é: ${newPassword}</p><br><a href="http://localhost:3000/">Sistema</a>`,
+        }).then(
+            () => {
+                bcrypt.hash(newPassword, 8).then(
+                    password => {
+                        getRepository(Student).update(user[0].id_student, {
+                            password
+                        }).then(
+                            () => {
+                                return response.status(200).json({ message: 'Email sended' });
+                            }
+                        ).catch(
+                            () => {
+                                return response.status(404).json({ message: 'User not found' });
+                            }
+                        )
+                    }
+                )
+            }
+        )
+
+    } catch (error) {
+        return response.status(422).json({ message: 'Fail to send email' });
+    }
 }
 
 export const buyCourses = async(request: Request, response: Response) => {
