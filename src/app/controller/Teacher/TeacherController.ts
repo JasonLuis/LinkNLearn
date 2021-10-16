@@ -1,5 +1,6 @@
 import { createQueryBuilder, getRepository, Not } from "typeorm";
 import { Teacher } from "../../models/Teacher";
+import { Course } from "../../models/Course";
 import { Request, Response } from "express";
 import { Plan } from "../../models/Plan";
 
@@ -15,6 +16,14 @@ export const getTeacherById = async (request: Request, response: Response) => {
     const teacher = await repository.find({ where: { id_teacher: id } });
 
     return response.json(teacher);
+}
+
+export const getTeacherCourses = async (request: Request, response: Response) => {
+    const repository = await getRepository(Course);
+    const { teacher } = request.body;
+    const courses = await repository.find({ where: { teacher: teacher } });
+
+    return response.json(courses);
 }
 
 export const saveTeacher = async (request: Request, response: Response) => {
