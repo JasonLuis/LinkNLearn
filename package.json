@@ -8,8 +8,10 @@
       "@types/jsonwebtoken": "^8.5.5",
       "@types/node": "^8.0.29",
       "@types/nodemailer": "^6.4.4",
+      "@types/cors": "^2.8.12",
       "nodemon": "^2.0.12",
       "ts-node": "3.3.0",
+      "cors": "^2.8.5",
       "typescript": "3.3.3333"
    },
    "dependencies": {
