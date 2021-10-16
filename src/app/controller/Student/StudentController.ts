@@ -78,6 +78,10 @@ export const forgotPassword = async(request: Request, response: Response) => {
             }
         })
 
+        if(user){
+            return response.sendStatus(409); 
+        }
+
         const transporter = nodemailer.createTransport({
             host: "smtp.mailtrap.io",
             port: 2525,
