@@ -22,7 +22,7 @@ routes.post('/student/create', saveUserStudent);
 routes.post('/student/auth', AuthStudentUserController.authenticate);
 routes.put('/student/update', authUserMiddleware, updateStudent);
 routes.post('/student/buy', authUserMiddleware, buyCourses);
-routes.get('/student/listCourses', authUserMiddleware, listAllByCourses);
+routes.post('/student/listCourses', authUserMiddleware, listAllByCourses);
 routes.post('/student/getById', authUserMiddleware, getStudentById);
 routes.post('/student/forgot-password', forgotPassword);
 

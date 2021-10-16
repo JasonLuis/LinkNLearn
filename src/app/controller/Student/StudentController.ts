@@ -1,5 +1,5 @@
 import { getRepository, Not } from "typeorm";
-import { Student }  from "../../models/Student";
+import { Student } from "../../models/Student";
 import { StudentsCourses } from "../../models/StudentsCourses";
 import { Request, Response } from "express";
 import * as nodemailer from 'nodemailer';
@@ -7,34 +7,34 @@ import * as bcrypt from 'bcryptjs';
 import * as crypto from "crypto";
 
 //função so para teste
-export const listStudents = async(request: Request, response: Response) => {
+export const listStudents = async (request: Request, response: Response) => {
     const students = await getRepository(Student).find();
     return response.json(students);
 }
 
 
-export const saveUserStudent = async(request: Request, response: Response) => {
+export const saveUserStudent = async (request: Request, response: Response) => {
     const repository = await getRepository(Student)
     const { cpf, email } = request.body;
 
-    const emailExists = await repository.findOne({ where: {email} });
-    const cpfExists =  await repository.findOne({ where: {cpf} });
+    const emailExists = await repository.findOne({ where: { email } });
+    const cpfExists = await repository.findOne({ where: { cpf } });
 
-    if(emailExists || cpfExists){
+    if (emailExists || cpfExists) {
         return response.sendStatus(409);
     }
-    
+
     const student = repository.create(request.body)
     const userStudent = await repository.save(student);
 
     return response.json(userStudent);
 }
 
-export const updateStudent = async(request: Request, response: Response) => {
+export const updateStudent = async (request: Request, response: Response) => {
     const repository = await getRepository(Student)
-    const id  = request.userId;
+    const id = request.userId;
     const { cpf, email } = request.body;
-    
+
     const emailExists = await repository.findOne({
         id_student: Not(id),
         email: email,
@@ -43,20 +43,20 @@ export const updateStudent = async(request: Request, response: Response) => {
         id_student: Not(id),
         cpf: cpf,
     });
-    
+
     //console.log(emailExists);
-    if(emailExists || cpfExists){
+    if (emailExists || cpfExists) {
         return response.sendStatus(409).json({
             message: "CPF or email used by another user"
         });
     }
 
     const student = repository.create(request.body);
-    
+
     const user = await repository.update(id, student as any);
 
-    if(user.affected === 1){
-        
+    if (user.affected === 1) {
+
         const userUpdate = await repository.findOne(id);
         return response.json(userUpdate);
     }
@@ -66,11 +66,11 @@ export const updateStudent = async(request: Request, response: Response) => {
     });
 }
 
-export const forgotPassword = async(request: Request, response: Response) => {
+export const forgotPassword = async (request: Request, response: Response) => {
     const { email } = request.body;
 
     try {
-        
+
 
         const user = await getRepository(Student).find({
             where: {
@@ -78,8 +78,8 @@ export const forgotPassword = async(request: Request, response: Response) => {
             }
         })
 
-        if(user){
-            return response.sendStatus(409); 
+        if (user) {
+            return response.sendStatus(409);
         }
 
         const transporter = nodemailer.createTransport({
@@ -123,9 +123,9 @@ export const forgotPassword = async(request: Request, response: Response) => {
     }
 }
 
-export const buyCourses = async(request: Request, response: Response) => {
+export const buyCourses = async (request: Request, response: Response) => {
     const repository = await getRepository(StudentsCourses)
-    const id  = request.userId;
+    const id = request.userId;
     const { id_course } = request.body;
     const body = {
         student: id,
@@ -138,18 +138,18 @@ export const buyCourses = async(request: Request, response: Response) => {
     return response.json(buyCourses);
 }
 
-export const getStudentById = async(request: Request, response: Response) => {
+export const getStudentById = async (request: Request, response: Response) => {
     const repository = await getRepository(Student);
     const id = request.userId;
-    const student = await repository.find({where: {id_student: id}});
+    const student = await repository.find({ where: { id_student: id } });
 
     return response.json(student);
 }
 
-export const listAllByCourses = async(request: Request, response: Response) => {
+export const listAllByCourses = async (request: Request, response: Response) => {
     const repository = await getRepository(StudentsCourses)
-    const id  = request.userId;
-    const courses = await repository.find({where: {student:  id}, relations: ["course"]});
+    const id = request.userId;
+    const courses = await repository.find({ where: { student: id }, relations: ["course", "course.teacher"] });
 
     return response.json(courses);
 }
