@@ -71,15 +71,20 @@ export const forgotPassword = async (request: Request, response: Response) => {
 
     try {
 
-
         const user = await getRepository(Student).find({
             where: {
                 email
             }
         })
 
-        if (user) {
-            return response.sendStatus(409);
+        if (user.length === 0) {
+            return response.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        if (user.length !== 0) {
+            return response.sendStatus(200);
         }
 
         const transporter = nodemailer.createTransport({
