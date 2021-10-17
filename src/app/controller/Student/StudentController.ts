@@ -78,16 +78,27 @@ export const forgotPassword = async(request: Request, response: Response) => {
             }
         })
 
-        if(user){
-            return response.sendStatus(409); 
+        if(!user){
+            return response.sendStatus(409).json({
+                message: "email is not exist"
+            }); 
         }
 
         const transporter = nodemailer.createTransport({
-            host: "smtp.mailtrap.io",
+            // -> conf mailtrap
+            /*host: "smtp.mailtrap.io",
             port: 2525,
             auth: {
                 user: "6eb9921a9fd7a4",
                 pass: "21bae478f32eac"
+            }*/
+            // -> conf gmail
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            auth: {
+                user: "linklearninc@gmail.com",
+                pass: "Linklearn123"
             }
         })
 
