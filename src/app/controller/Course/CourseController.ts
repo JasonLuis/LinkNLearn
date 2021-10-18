@@ -25,6 +25,14 @@ export const listCourses = async(req: Request, res: Response) => {
     return res.json(courses);
 }
 
+export const getCoursesById = async(req: Request, res: Response) => {
+    const repository = await getRepository(Course);
+    const { id_course } = req.body;
+    const course = await repository.find({ where: { id_course: id_course }, relations: ["teacher"] });
+    
+    return res.json(course);
+}
+
 export const saveCourse = async(req: Request, res: Response) => {
     const repository = await getRepository(Course);
     const id = req.userId;
