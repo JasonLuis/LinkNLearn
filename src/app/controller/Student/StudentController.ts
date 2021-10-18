@@ -99,6 +99,9 @@ export const forgotPassword = async (request: Request, response: Response) => {
             auth: {
                 user: "linklearninc@gmail.com",
                 pass: "Linklearn123"
+            },
+            tls: {
+                rejectUnauthorized: false
             }
         })
 
