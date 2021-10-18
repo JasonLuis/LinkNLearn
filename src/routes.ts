@@ -11,14 +11,15 @@ import { createFeedBack, listFeedbackByCourse } from './app/controller/Feedback/
 const routes = Router();
 
 const multer = require('multer');
+const fileSystem = require('fs');
 const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
-            callback(null, 'uploads/');
+            callback(null, __dirname + '\\uploads\\');
         },
         filename: (req, file, callback) => {
             const type = file.mimetype.split('/')[1];
-            callback(null, file.originalname + '-' + Date.now() + '.' + type);
+            callback(null, req.userId + '.' + type);
         }
     })
 });
@@ -39,7 +40,21 @@ routes.post('/student/listCourses', authUserMiddleware, listAllByCourses);
 routes.post('/student/getById', authUserMiddleware, getStudentById);
 routes.post('/student/forgot-password', forgotPassword);
 routes.post('/student/upload/profile', authUserMiddleware, upload.single('photo'), function (req, res, next) {
-    return res.status(200);
+    res.status(200).end();
+});
+routes.get('/student/upload/profile', authUserMiddleware, function (req, res, next) {
+
+    const filePath = __dirname + '\\uploads\\' + req.userId + '.jpeg';
+
+    if (fileSystem.existsSync(filePath)) {
+        fileSystem.readFile(filePath, function (err, data) {
+            var base64 = Buffer.from(data).toString('base64');
+            base64 = 'data:image/jpeg;base64,' + base64;
+            res.send(base64);
+        });
+    } else {
+        res.status(404).end();
+    }
 });
 
 
