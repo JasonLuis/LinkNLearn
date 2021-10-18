@@ -5,7 +5,7 @@ import { deletePlan, listPlans, savePlans, updatePlan } from './app/controller/P
 import { getTeacherById, getTeacherCourses, listTeachers, saveTeacher, updateTeacher } from "./app/controller/Teacher/TeacherController";
 import AuthStudentUserController from './app/controller/Student/AuthStudentUserController';
 import AuthTeacherUserController from './app/controller/Teacher/AuthTeacherUserController';
-import { listCourses, saveCourse } from './app/controller/Course/CourseController';
+import { getCoursesById, listCourses, saveCourse } from './app/controller/Course/CourseController';
 import { createFeedBack, listFeedbackByCourse } from './app/controller/Feedback/FeedbackController';
 
 const routes = Router();
@@ -81,5 +81,6 @@ routes.post('/courses/create', authUserMiddleware, saveCourse);
 // Feedback
 routes.post('/course/listAllFeedback', listFeedbackByCourse); //listar
 routes.post('/course/feedback', authUserMiddleware, createFeedBack);//criar
+routes.post('/course/getById', getCoursesById);
 
 export default routes;
