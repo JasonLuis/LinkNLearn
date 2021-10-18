@@ -77,22 +77,28 @@ export const forgotPassword = async (request: Request, response: Response) => {
             }
         })
 
+
         if (user.length === 0) {
             return response.status(404).json({
                 message: "User not found"
             });
         }
 
-        if (user.length !== 0) {
-            return response.sendStatus(200);
-        }
-
         const transporter = nodemailer.createTransport({
-            host: "smtp.mailtrap.io",
+            // -> conf mailtrap
+            /*host: "smtp.mailtrap.io",
             port: 2525,
             auth: {
                 user: "6eb9921a9fd7a4",
                 pass: "21bae478f32eac"
+            }*/
+            // -> conf gmail
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            auth: {
+                user: "linklearninc@gmail.com",
+                pass: "Linklearn123"
             }
         })
 
