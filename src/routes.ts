@@ -15,7 +15,7 @@ const fileSystem = require('fs');
 const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
-            callback(null, __dirname + '\\uploads\\');
+            callback(null, __dirname + '\\uploads\\avatar\\');
         },
         filename: (req, file, callback) => {
             const type = file.mimetype.split('/')[1];
@@ -44,7 +44,7 @@ routes.post('/student/upload/profile', authUserMiddleware, upload.single('photo'
 });
 routes.get('/student/upload/profile', authUserMiddleware, function (req, res, next) {
 
-    const filePath = __dirname + '\\uploads\\' + req.userId + '.jpeg';
+    const filePath = __dirname + '\\uploads\\avatar\\' + req.userId + '.jpeg';
 
     if (fileSystem.existsSync(filePath)) {
         fileSystem.readFile(filePath, function (err, data) {
