@@ -12,17 +12,6 @@ const routes = Router();
 
 const multer = require('multer');
 const fileSystem = require('fs');
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: (req, file, callback) => {
-            callback(null, __dirname + '\\uploads\\avatar\\');
-        },
-        filename: (req, file, callback) => {
-            const type = file.mimetype.split('/')[1];
-            callback(null, req.userId + '.' + type);
-        }
-    })
-});
 
 routes.get('/', (request: Request, response: Response) => {
     return response.json({ message: 'Bem vindo a LinkLearn' });
@@ -39,10 +28,23 @@ routes.post('/student/buy', authUserMiddleware, buyCourses);
 routes.post('/student/listCourses', authUserMiddleware, listAllByCourses);
 routes.post('/student/getById', authUserMiddleware, getStudentById);
 routes.post('/student/forgot-password', forgotPassword);
-routes.post('/student/upload/profile', authUserMiddleware, upload.single('photo'), function (req, res, next) {
+
+const uploadAvatar = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, callback) => {
+            callback(null, __dirname + '\\uploads\\avatar\\');
+        },
+        filename: (req, file, callback) => {
+            const type = file.mimetype.split('/')[1];
+            callback(null, req.userId + '.' + type);
+        }
+    })
+});
+
+routes.post('/student/upload/profile', authUserMiddleware, uploadAvatar.single('photo'), function (req, res, next) {
     res.status(200).end();
 });
-routes.get('/student/upload/profile', authUserMiddleware, function (req, res, next) {
+routes.get('/student/upload/profile', function (req, res, next) {
 
     const filePath = __dirname + '\\uploads\\avatar\\' + req.userId + '.jpeg';
 
@@ -77,6 +79,35 @@ routes.post('/teacher/courses', authUserMiddleware, getTeacherCourses);
 routes.get('/courses/listAll', listCourses);
 routes.post('/courses/create', authUserMiddleware, saveCourse);
 
+const uploadThumb = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, callback) => {
+            callback(null, __dirname + '\\uploads\\thumbnail\\');
+        },
+        filename: (req, file, callback) => {
+            const type = file.mimetype.split('/')[1];
+            callback(null, req.headers.courseid + '.' + type);
+        }
+    })
+});
+
+routes.post('/course/upload/thumbnail', authUserMiddleware, uploadThumb.single('photo'), function (req, res, next) {
+    res.status(200).end();
+});
+routes.get('/course/upload/thumbnail', function (req, res, next) {
+
+    const filePath = __dirname + '\\uploads\\thumbnail\\' + req.headers.courseid + '.jpeg';
+
+    if (fileSystem.existsSync(filePath)) {
+        fileSystem.readFile(filePath, function (err, data) {
+            var base64 = Buffer.from(data).toString('base64');
+            base64 = 'data:image/jpeg;base64,' + base64;
+            res.send(base64);
+        });
+    } else {
+        res.status(404).end();
+    }
+});
 
 // Feedback
 routes.post('/course/listAllFeedback', listFeedbackByCourse); //listar
