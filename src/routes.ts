@@ -41,12 +41,11 @@ const uploadAvatar = multer({
     })
 });
 
-routes.post('/student/upload/profile', authUserMiddleware, uploadAvatar.single('photo'), function (req, res, next) {
+routes.post('/user/upload/avatar', authUserMiddleware, uploadAvatar.single('photo'), function (req, res, next) {
     res.status(200).end();
 });
-routes.get('/student/upload/profile', function (req, res, next) {
-
-    const filePath = __dirname + '\\uploads\\avatar\\' + req.userId + '.jpeg';
+routes.get('/user/upload/avatar', function (req, res, next) {
+    const filePath = __dirname + '\\uploads\\avatar\\' + req.headers.userid + '.jpeg';
 
     if (fileSystem.existsSync(filePath)) {
         fileSystem.readFile(filePath, function (err, data) {
@@ -57,6 +56,7 @@ routes.get('/student/upload/profile', function (req, res, next) {
     } else {
         res.status(404).end();
     }
+
 });
 
 
