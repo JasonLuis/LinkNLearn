@@ -20,7 +20,7 @@ interface Courses{
 };
 
 export const listCourses = async(req: Request, res: Response) => {
-    const courses = await getRepository(Course).find({relations: ["teacher"]});
+    const courses = await getRepository(Course).find({relations: ["teacher","category"]});
 
     return res.json(courses);
 }

@@ -15,7 +15,6 @@ export class Plan{
     @Column()
     description: string;
 
-    
     @OneToMany(type => Teacher, plan => Plan)
     teacher: Teacher[];
 }

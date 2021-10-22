@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Category } from "./Category";
 import { Feedback } from "./Feedback";
 import { StudentsCourses } from "./StudentsCourses";
 import { Teacher } from "./Teacher";
@@ -53,5 +54,9 @@ export class Course {
     studentsCourses: StudentsCourses[];
 
     @OneToMany(type => Feedback, course => Course)
-    feedback: Feedback[];    
+    feedback: Feedback[];
+
+    @ManyToOne(type => Category, course => Course)
+    @JoinColumn({name: 'id_category'})
+    category: Category;
 }

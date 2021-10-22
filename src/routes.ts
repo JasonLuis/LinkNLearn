@@ -2,11 +2,12 @@ import { Router, Request, Response } from 'express';
 import authUserMiddleware from './app/middlewares/authUserMiddleware';
 import { buyCourses, forgotPassword, getStudentById, listAllByCourses, listStudents, saveUserStudent, updateStudent } from './app/controller/Student/StudentController';
 import { deletePlan, listPlans, savePlans, updatePlan } from './app/controller/Plan/PlanController';
-import { getTeacherById, getTeacherCourses, listTeachers, saveTeacher, updateTeacher } from "./app/controller/Teacher/TeacherController";
+import { forgotPasswordTeacher, getTeacherById, getTeacherCourses, listTeachers, saveTeacher, updateTeacher } from "./app/controller/Teacher/TeacherController";
 import AuthStudentUserController from './app/controller/Student/AuthStudentUserController';
 import AuthTeacherUserController from './app/controller/Teacher/AuthTeacherUserController';
 import { getCoursesById, listCourses, saveCourse } from './app/controller/Course/CourseController';
 import { createFeedBack, listFeedbackByCourse } from './app/controller/Feedback/FeedbackController';
+import { listCategories, saveCategory } from './app/controller/Category/CategoryController';
 
 const routes = Router();
 
@@ -28,6 +29,10 @@ routes.post('/student/buy', authUserMiddleware, buyCourses);
 routes.post('/student/listCourses', authUserMiddleware, listAllByCourses);
 routes.post('/student/getById', authUserMiddleware, getStudentById);
 routes.post('/student/forgot-password', forgotPassword);
+
+//Rotas de categoria de cursos
+routes.get('/category/listAll', listCategories);
+routes.post('/category/save', saveCategory);
 
 const uploadAvatar = multer({
     storage: multer.diskStorage({
@@ -75,6 +80,7 @@ routes.post('/teacher/auth', AuthTeacherUserController.authenticate);
 routes.put('/teacher/update', authUserMiddleware, updateTeacher);
 routes.post('/teacher/getById', authUserMiddleware, getTeacherById);
 routes.post('/teacher/courses', authUserMiddleware, getTeacherCourses);
+routes.post('/teacher/forgot-password', forgotPasswordTeacher);
 
 routes.get('/courses/listAll', listCourses);
 routes.post('/courses/create', authUserMiddleware, saveCourse);
