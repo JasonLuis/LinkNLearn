@@ -57,8 +57,8 @@ export class Teacher{
     @JoinColumn({name: 'id_plan'})
     plan: Plan;
 
-    @OneToMany(type => Course, teacher => Teacher)
-    Course: Course[];
+    @OneToMany(type => Course, course => course.teacher)
+    course: Course[];
 }
 
 

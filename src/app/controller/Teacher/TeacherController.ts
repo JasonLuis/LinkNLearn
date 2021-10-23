@@ -15,8 +15,8 @@ export const listTeachers = async (request: Request, response: Response) => {
 
 export const getTeacherById = async (request: Request, response: Response) => {
   const repository = await getRepository(Teacher);
-  const id = request.body.id_teacher;
-  const teacher = await repository.find({ where: { id_teacher: id } });
+  const id = request.userId;
+  const teacher = await repository.find({ where: { id_teacher: id }, relations: ["course"]});
 
   return response.json(teacher);
 };
@@ -150,3 +150,11 @@ export const forgotPasswordTeacher = async (
     return response.status(422).json({ message: "Fail to send email" });
   }
 };
+
+
+export const listCourseByTeacher =  async (req: Request, res: Response) => {
+  const { id_teacher } = req.body;
+  const repoCourses = await getRepository(Course);
+
+  const teacher = await getRepository(Teacher).find({relations: ["course"]});
+}
