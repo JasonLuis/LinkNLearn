@@ -45,6 +45,7 @@ export class Student {
     @OneToMany(type => StudentsCourses, student => Student)
     studentsCourses: StudentsCourses[];
 
-    @OneToMany(type => Feedback, student => Student)
+    @OneToMany(type => Feedback, feedback => feedback.student)
     feedback: Feedback[];
+
 }

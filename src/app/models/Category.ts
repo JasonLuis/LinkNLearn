@@ -10,6 +10,7 @@ export class Category {
     @Column()
     title: string;
 
-    @OneToMany(type => Course, category => Category)
+    @OneToMany(type => Course, course => course.category)
     course: Course[];
+
 }
