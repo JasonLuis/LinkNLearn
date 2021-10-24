@@ -19,7 +19,7 @@ export const createFeedBack = async(request: Request, response: Response) => {
     });
 
     if(feedExist) {
-        return response.sendStatus(409).json(
+        return response.status(409).json(
             {
                 message: "comment is exist!"
             }

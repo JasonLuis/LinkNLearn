@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Cart } from "./Cart";
 import { Category } from "./Category";
 import { Feedback } from "./Feedback";
 import { StudentsCourses } from "./StudentsCourses";
@@ -59,4 +60,7 @@ export class Course {
     @ManyToOne(type => Category, course => Course)
     @JoinColumn({name: 'id_category'})
     category: Category;
+
+    @OneToMany(type => Cart, cart => cart.course)
+    cart: Cart[];
 }

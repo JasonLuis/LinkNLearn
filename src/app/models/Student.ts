@@ -2,6 +2,7 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGenerated
 import * as bcrypt from 'bcryptjs';
 import { StudentsCourses } from "./StudentsCourses";
 import { Feedback } from "./Feedback";
+import { Purchase } from "./Purchase";
 
 @Entity('students')
 export class Student {
@@ -47,5 +48,8 @@ export class Student {
 
     @OneToMany(type => Feedback, feedback => feedback.student)
     feedback: Feedback[];
+
+    @OneToMany(type => Purchase, purchase => purchase.student)
+    purchase: Purchase[];
 
 }

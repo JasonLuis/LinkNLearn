@@ -6,6 +6,21 @@ import * as nodemailer from 'nodemailer';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from "crypto";
 
+
+const transporter = nodemailer.createTransport({
+    // -> conf gmail
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: "linklearninc@gmail.com",
+        pass: "Linklearn123"
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+})   
+
 //função so para teste
 export const listStudents = async (request: Request, response: Response) => {
     const students = await getRepository(Student).find();
@@ -23,9 +38,18 @@ export const saveUserStudent = async (request: Request, response: Response) => {
     if (emailExists || cpfExists) {
         return response.sendStatus(409);
     }
-
     const student = repository.create(request.body)
     const userStudent = await repository.save(student);
+    transporter.sendMail({
+        from: 'LinkLearn <457f7a1349-e88ec1@inbox.mailtrap.io>',
+        to: email,
+        subject: 'Bem Vindo a LinkLearn',
+        html: `<p>Olá ${request.body.name}, seja bem vindo ao LinkLearn.</p><br>
+        <p>
+            Acesse o site: <a href="http://localhost:3000/">LinkLearn</a>
+            e de um up no seu futuro.
+        </p>`,
+    });
 
     return response.json(userStudent);
 }
