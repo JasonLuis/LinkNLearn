@@ -28,6 +28,11 @@ export class Student {
     @Column()
     email: string;
 
+    @Column({
+        default: 0
+    })
+    credit: number
+
     @Column()
     password: string;
 

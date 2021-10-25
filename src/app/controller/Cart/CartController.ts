@@ -26,3 +26,10 @@ export const listCart = async (request: Request, response: Response) => {
     return response.sendStatus(201);
 }
 
+export const createCart = async (request: Request, response: Response) => {
+    
+    const repoPurchase = await getRepository(Purchase);
+    const repoCart = await getRepository(Cart);
+
+    
+}

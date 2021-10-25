@@ -35,6 +35,11 @@ export class Course {
     @Column()
     maxStudent: number;
 
+    @Column({
+        default: 0
+    })
+    minStudent: number;
+
     @Column()
     price: number;
 
@@ -46,6 +51,11 @@ export class Course {
 
     @Column()
     hours: string;
+
+    @Column({
+        default: 'open'
+    })
+    status: string;
 
     @ManyToOne(type => Teacher, course => Course)
     @JoinColumn({name: 'id_teacher'})

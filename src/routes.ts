@@ -5,7 +5,7 @@ import { deletePlan, listPlans, savePlans, updatePlan } from './app/controller/P
 import { forgotPasswordTeacher, getTeacherById, getTeacherCourses, listTeachers, saveTeacher, updateTeacher } from "./app/controller/Teacher/TeacherController";
 import AuthStudentUserController from './app/controller/Student/AuthStudentUserController';
 import AuthTeacherUserController from './app/controller/Teacher/AuthTeacherUserController';
-import { getCoursesById, listCourses, saveCourse } from './app/controller/Course/CourseController';
+import { getCoursesById, listCourses, saveCourse, updateCourse } from './app/controller/Course/CourseController';
 import { createFeedBack, listFeedbackByCourse } from './app/controller/Feedback/FeedbackController';
 import { listCategories, saveCategory } from './app/controller/Category/CategoryController';
 import { listCart } from './app/controller/Cart/CartController';
@@ -85,6 +85,8 @@ routes.post('/teacher/forgot-password', forgotPasswordTeacher);
 
 routes.get('/courses/listAll', listCourses);
 routes.post('/courses/create', authUserMiddleware, saveCourse);
+routes.put('/courses/update', authUserMiddleware, updateCourse);
+
 
 const uploadThumb = multer({
     storage: multer.diskStorage({

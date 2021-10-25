@@ -34,7 +34,7 @@ export const getCoursesById = async(req: Request, res: Response) => {
 }
 
 export const saveCourse = async(req: Request, res: Response) => {
-    const repository = await getRepository(Course);
+    const repository = getRepository(Course);
     const id = req.userId;
     
     const create:Courses = {
@@ -60,4 +60,26 @@ export const saveCourse = async(req: Request, res: Response) => {
     }
 
     return res.json(cadCourses);
+}
+
+export const updateCourse = async (request: Request, response: Response) => {
+    const repository = await getRepository(Course)
+    const id = request.body.id_course
+    if(!id){
+        return response.sendStatus(409).json({
+            message: ""
+        });
+    }
+
+    const course = repository.create(request.body);
+    const user = await repository.update(id, course as any);
+
+    if (user.affected === 1) {
+        const userUpdate = await repository.findOne(id);
+        return response.json(userUpdate);
+    }
+
+    return response.status(404).json({
+        message: "User not found",
+    });
 }
