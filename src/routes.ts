@@ -8,7 +8,7 @@ import AuthTeacherUserController from './app/controller/Teacher/AuthTeacherUserC
 import { getCoursesById, listCourses, saveCourse, updateCourse } from './app/controller/Course/CourseController';
 import { createFeedBack, listFeedbackByCourse } from './app/controller/Feedback/FeedbackController';
 import { listCategories, saveCategory } from './app/controller/Category/CategoryController';
-import { listCart } from './app/controller/Cart/CartController';
+import { createCart, listCart } from './app/controller/Cart/CartController';
 
 const routes = Router();
 
@@ -126,5 +126,5 @@ routes.post('/course/getById', getCoursesById);
 
 // Shopping Cart
 routes.get('/course/buy/listAll',authUserMiddleware, listCart);
-
+routes.post('/course/buy/create-cart',authUserMiddleware, createCart);
 export default routes;

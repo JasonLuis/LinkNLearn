@@ -17,7 +17,7 @@ export const listCart = async (request: Request, response: Response) => {
     }, { relations: ["cart"]});
 
     console.log(cartExist);
-    if(!cartExist){
+    if(cartExist === undefined){
         return response.status(409).json({
             "message": "not found"
         })
@@ -27,9 +27,20 @@ export const listCart = async (request: Request, response: Response) => {
 }
 
 export const createCart = async (request: Request, response: Response) => {
-    
+
     const repoPurchase = await getRepository(Purchase);
     const repoCart = await getRepository(Cart);
 
-    
+    const id = request.userId;
+
+    const purchase = await repoPurchase.findOne({where:{ 
+        status: 'open'
+    }});
+
+    if(purchase === undefined){
+        const create = await repoPurchase.create();
+        const save = await repoPurchase.save(create);
+    }
+
+    return response.sendStatus(201);
 }

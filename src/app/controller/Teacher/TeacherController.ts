@@ -27,7 +27,7 @@ export const getTeacherCourses = async (
 ) => {
   const repository = await getRepository(Course);
   const { teacher } = request.body;
-  const courses = await repository.find({ where: { teacher: teacher } });
+  const courses = await repository.find({ where: { teacher: teacher }, relations: ["teacher"] });
 
   return response.json(courses);
 };
