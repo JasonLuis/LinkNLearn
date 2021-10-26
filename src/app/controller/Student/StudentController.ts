@@ -183,9 +183,9 @@ export const getStudentById = async (request: Request, response: Response) => {
 }
 
 export const listAllByCourses = async (request: Request, response: Response) => {
-    const repository = await getRepository(StudentsCourses)
+    const repository = getRepository(StudentsCourses)
     const id = request.userId;
-    const courses = await repository.find({ where: { student: id }, relations: ["course", "course.teacher"] });
+    const courses = await repository.find({ where: { student: id }, relations: ["course"] });
 
     return response.json(courses);
 }
