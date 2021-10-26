@@ -16,9 +16,10 @@ export class Purchase {
     })
     status: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     typePayment: string;
-
 
     @Column({
         default: new Date()

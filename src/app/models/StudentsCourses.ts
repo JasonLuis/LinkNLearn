@@ -4,7 +4,7 @@ import { Student } from "./Student";
 
 @Entity('students_courses')
 export class StudentsCourses {
-
+    
     @Column({
         default: false
     })

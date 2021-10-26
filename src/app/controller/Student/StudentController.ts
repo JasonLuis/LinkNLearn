@@ -68,7 +68,6 @@ export const updateStudent = async (request: Request, response: Response) => {
         cpf: cpf,
     });
 
-    //console.log(emailExists);
     if (emailExists || cpfExists) {
         return response.sendStatus(409).json({
             message: "CPF or email used by another user"
@@ -80,7 +79,6 @@ export const updateStudent = async (request: Request, response: Response) => {
     const user = await repository.update(id, student as any);
 
     if (user.affected === 1) {
-
         const userUpdate = await repository.findOne(id);
         return response.json(userUpdate);
     }
