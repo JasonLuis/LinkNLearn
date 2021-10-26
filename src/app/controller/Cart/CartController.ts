@@ -166,7 +166,7 @@ export const finishBuy = async (request: Request, response: Response) => {
             student: id,
             course: item,
         };
-        const {title, platform} = await repoCourse.findOne({
+        const {title, link} = await repoCourse.findOne({
              where: {id_course: item.id_course} });
         const students_courses = await repoStudentCourses.findOne({
             where: {course: item.id_course, student: id}
@@ -187,7 +187,7 @@ export const finishBuy = async (request: Request, response: Response) => {
             subject: `Bem Vindo ao curso de ${title}`,
             html: `<p>Olá ${name}, parabens por ter adquirido o curso de ${title}.</p><br>
             <p>
-                Acesse o link para ter acesso a plataforma: <a href="#">${platform}</a>
+                Acesse o link para ter acesso a plataforma: <a href="#">${link}</a>
                 e de um up no seu futuro.
             </p>`,
         });

@@ -46,6 +46,11 @@ export class Course {
     @Column()
     platform: string;
 
+    @Column({
+        nullable: true
+    })
+    link: string;
+
     @Column()
     logoCourse: string;
 
