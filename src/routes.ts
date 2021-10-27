@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import authUserMiddleware from './app/middlewares/authUserMiddleware';
 import { buyCourses, forgotPassword, getStudentById, listAllByCourses, listStudents, saveUserStudent, updateStudent } from './app/controller/Student/StudentController';
 import { deletePlan, listPlans, savePlans, updatePlan } from './app/controller/Plan/PlanController';
-import { forgotPasswordTeacher, getTeacherById, getTeacherCourses, listTeachers, saveTeacher, updateTeacher } from "./app/controller/Teacher/TeacherController";
+import { forgotPasswordTeacher, getTeacherById, getTeacherCourses, listTeachers, saveTeacher, updateTeacher, updateTeacherPlan } from "./app/controller/Teacher/TeacherController";
 import AuthStudentUserController from './app/controller/Student/AuthStudentUserController';
 import AuthTeacherUserController from './app/controller/Teacher/AuthTeacherUserController';
 import { getCoursesById, listCourses, saveCourse, updateCourse } from './app/controller/Course/CourseController';
@@ -79,6 +79,7 @@ routes.get('/teacher/listAll', listTeachers);
 routes.post('/teacher/create', saveTeacher);
 routes.post('/teacher/auth', AuthTeacherUserController.authenticate);
 routes.put('/teacher/update', authUserMiddleware, updateTeacher);
+routes.put('/teacher/update-plan', authUserMiddleware, updateTeacherPlan)
 routes.post('/teacher/getById', authUserMiddleware, getTeacherById);
 routes.post('/teacher/courses', authUserMiddleware, getTeacherCourses);
 routes.post('/teacher/forgot-password', forgotPasswordTeacher);

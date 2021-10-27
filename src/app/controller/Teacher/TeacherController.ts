@@ -64,7 +64,7 @@ export const updateTeacher = async (req: Request, res: Response) => {
   });
 
   if (emailExists || cpfExists) {
-    return res.sendStatus(409).json({
+    return res.status(409).json({
       message: "CPF or email used by another user",
     });
   }
@@ -82,6 +82,26 @@ export const updateTeacher = async (req: Request, res: Response) => {
     message: "User not found",
   });
 };
+
+export const updateTeacherPlan = async (req: Request, res: Response) => {
+  const repository = await getRepository(Teacher);
+  const id = req.userId;
+  const update = await repository.save({
+    id_teacher: id,
+    plan: req.body.plan,
+  });
+    
+  if (update !== undefined) {
+    const userUpdate = await repository.findOne(id);
+    return res.json(userUpdate);
+  }
+    
+  return res.status(404).json({
+      message: "User not found",
+  });
+    
+  
+}
 
 export const forgotPasswordTeacher = async (
   request: Request,

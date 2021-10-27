@@ -15,6 +15,7 @@ interface Courses{
     maxStudent: number;
     price: number;
     platform: string;
+    link: string;
     logoCourse: string;
     hours: string;
     teacher: string;
@@ -55,6 +56,7 @@ export const saveCourse = async(req: Request, res: Response) => {
         maxStudent: req.body.maxStudent,
         price: req.body.price,
         platform: req.body.platform,
+        link: req.body.link,
         logoCourse: req.body.logoCourse,
         hours: req.body.hours,
         teacher: id,

@@ -23,8 +23,14 @@ const transporter = nodemailer.createTransport({
 
 export const listCart = async (request: Request, response: Response) => {
   const id = request.userId;
-
+  const arrCourses = [];
+  
   const repoPurchase = await createQueryBuilder(Course)
+    .innerJoinAndSelect(
+      "teachers",
+      "t",
+      "t.id_teacher = Course.id_teacher"
+    )
     .innerJoinAndSelect(
       "cart",
       "c",
@@ -37,24 +43,37 @@ export const listCart = async (request: Request, response: Response) => {
     )
     .select(`
      c.id_course as id_course,
-     p.id_purchase as id_purchase,
-     Course.title as title,
-     Course.price as price,
-     Course.description as description
-     `)
+     p.*
+    `)
     .where(
         "p.status = :status and p.id_student = :id_student",
         {status: "open", id_student: id},
     )
     .getRawMany();
 
-  if (repoPurchase === undefined) {
+  repoPurchase.map((item)=> {
+    arrCourses.push(item.id_course);
+  })
+
+  const arr = [];
+  const repository = getRepository(Course);
+  for (const item of arrCourses) {
+    const course = await repository.findOne({ where: { id_course: item }, relations: ["teacher"]});
+    arr.push(course);
+  }
+
+  const body = {
+    purchases: repoPurchase,
+    courses: arr
+  }
+  
+  if (repoPurchase === undefined || arrCourses.length === 0) {
     return response.status(409).json({
       message: "not found",
     });
   }
 
-  return response.status(201).json(repoPurchase);
+  return response.status(201).json(body);
 };
 
 export const createCart = async (request: Request, response: Response) => {
