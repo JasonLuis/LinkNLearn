@@ -1,6 +1,7 @@
 import { getRepository, Not } from "typeorm";
 import { Course } from '../../models/Course';
 import { Request, Response } from "express";
+import { StudentsCourses } from "../../models/StudentsCourses";
 
 interface Courses{
     id_course?: string;
@@ -26,11 +27,17 @@ export const listCourses = async(req: Request, res: Response) => {
 }
 
 export const getCoursesById = async(req: Request, res: Response) => {
-    const repository = await getRepository(Course);
+    const repository = getRepository(Course);
+    const repoStudents = getRepository(StudentsCourses);
     const { id_course } = req.body;
-    const course = await repository.find({ where: { id_course: id_course }, relations: ["teacher"] });
-    
-    return res.json(course);
+
+    const students = await repoStudents.find({where: {course: id_course}, relations: ["student"]});
+    const course = await repository.findOne({ where: { id_course: id_course }, relations: ["teacher"]});
+    const body = {
+        course,
+        students        
+    }
+    return res.json(body);
 }
 
 export const saveCourse = async(req: Request, res: Response) => {
@@ -83,3 +90,4 @@ export const updateCourse = async (request: Request, response: Response) => {
         message: "User not found",
     });
 }
+
