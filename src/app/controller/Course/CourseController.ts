@@ -13,6 +13,7 @@ interface Courses{
     period: string;
     classDate: string;
     maxStudent: number;
+    minStudent: number;
     price: number;
     platform: string;
     link: string;
@@ -54,6 +55,7 @@ export const saveCourse = async(req: Request, res: Response) => {
         period: req.body.period,
         classDate: req.body.classDate,
         maxStudent: req.body.maxStudent,
+        minStudent: req.body.minStudent,
         price: req.body.price,
         platform: req.body.platform,
         link: req.body.link,
@@ -73,7 +75,8 @@ export const saveCourse = async(req: Request, res: Response) => {
 
 export const updateCourse = async (request: Request, response: Response) => {
     const repository = await getRepository(Course)
-    const id = request.body.id_course
+    const id = request.body.id_course;
+    console.log(id);
     if(!id){
         return response.sendStatus(409).json({
             message: ""
