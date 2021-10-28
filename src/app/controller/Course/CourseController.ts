@@ -28,6 +28,14 @@ export const listCourses = async(req: Request, res: Response) => {
     return res.json(courses);
 }
 
+export const listStudentsCourses = async(req: Request, res: Response) => {
+    const { id_course } = req.body;
+    const studentsCourses = await getRepository(StudentsCourses).find({relations: ["student"], where: {
+        course: id_course
+    }})
+    return res.status(200).json(studentsCourses);
+}
+
 export const getCoursesById = async(req: Request, res: Response) => {
     const repository = getRepository(Course);
     const repoStudents = getRepository(StudentsCourses);
