@@ -122,6 +122,7 @@ export const createCart = async (request: Request, response: Response) => {
     )
     .getRawMany();
     
+    console.log(produtos)
     if(produtos.length !== 0) {
         return response.status(201).json(
             {
@@ -143,6 +144,37 @@ export const createCart = async (request: Request, response: Response) => {
     const save = await repoCart.save(create);
   return response.status(201).json(save);
 };
+
+export const deleteItem = async (request: Request, response:Response) => {
+  const repoPurchase = getRepository(Purchase);
+  const repoCart = getRepository(Cart);
+  const id = request.userId;
+  const {id_purchase} = await repoPurchase.findOne({
+    where: {
+      status: "open",
+      student: id as any,
+    },
+    relations: ["student"],
+  });
+  const { id_course } = request.body;
+
+  if(id_purchase === undefined){
+    return response.status(400).json({
+      message: "empty cart",
+    });
+  }
+
+  const course = await repoCart.delete({course: id_course, purchase: id_purchase as any});
+
+  if(course.affected === 1){
+    return response.status(200).json(course);
+  }
+
+  return response.status(401).json({
+    message: "error deleting item"
+  });
+}
+
 
 export const finishBuy = async (request: Request, response: Response) => {
     const repository = getRepository(Purchase);
