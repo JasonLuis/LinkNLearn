@@ -9,11 +9,11 @@ interface TokenID {
 const key = process.env.JWT_KEY
 export default function authUserMiddleware(
     request: Request, response: Response, next: NextFunction
-){
+) {
 
     const { authorization } = request.headers;
 
-    if(!authorization) {
+    if (!authorization) {
         return response.sendStatus(401);
     }
 
@@ -29,4 +29,4 @@ export default function authUserMiddleware(
     } catch (error) {
         return response.sendStatus(401);
     }
-}   
+}

@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
     tls: {
         rejectUnauthorized: false
     }
-})   
+})
 
 //função so para teste
 export const listStudents = async (request: Request, response: Response) => {
@@ -185,8 +185,8 @@ export const getStudentById = async (request: Request, response: Response) => {
 export const listAllByCourses = async (request: Request, response: Response) => {
     const repository = getRepository(StudentsCourses)
     const id = request.userId;
-    const courses = await (await repository.find({ where: { student: id }, relations: ["course","course.teacher"] }));
-
+    const courses = await (await repository.find({ where: { student: id }, relations: ["course", "course.teacher"] }));
+    console.log(courses);
     return response.json(courses);
 }
 

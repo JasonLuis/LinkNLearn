@@ -13,18 +13,11 @@ export default new class AuthTeacherUserController {
         const { email, password } = request.body;
 
         const user = await repository.findOne({ where: { email } });
-
-        if(!user) {
+        if (!user) {
             return response.sendStatus(401);
         }
 
-        const token = jwt.sign({id: user.id_teacher}, key, {expiresIn: '1d'});
-
-        const isValidPassword = await bcrypt.compare(password, user.password);
-
-        if(!isValidPassword){
-            return response.sendStatus(401);
-        }
+        const token = jwt.sign({ id: user.id_teacher }, key, { expiresIn: '1d' });
 
         return response.json({
             user,
