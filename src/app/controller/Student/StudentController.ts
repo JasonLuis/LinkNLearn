@@ -1,4 +1,4 @@
-import { getRepository, Not } from "typeorm";
+import { createQueryBuilder, getRepository, Not } from "typeorm";
 import { Student } from "../../models/Student";
 import { StudentsCourses } from "../../models/StudentsCourses";
 import { Request, Response } from "express";
@@ -185,7 +185,7 @@ export const getStudentById = async (request: Request, response: Response) => {
 export const listAllByCourses = async (request: Request, response: Response) => {
     const repository = getRepository(StudentsCourses)
     const id = request.userId;
-    const courses = await repository.find({ where: { student: id }, relations: ["course"] });
+    const courses = await (await repository.find({ where: { student: id }, relations: ["course","course.teacher"] }));
 
     return response.json(courses);
 }
