@@ -14,6 +14,7 @@ interface Courses{
     classDate: string;
     maxStudent: number;
     minStudent: number;
+    category: string;
     price: number;
     platform: string;
     link: string;
@@ -69,6 +70,7 @@ export const saveCourse = async(req: Request, res: Response) => {
         link: req.body.link,
         logoCourse: req.body.logoCourse,
         hours: req.body.hours,
+        category: req.body.id_category,
         teacher: id,
     }
     
