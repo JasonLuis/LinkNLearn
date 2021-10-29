@@ -85,7 +85,7 @@ routes.post('/teacher/courses', authUserMiddleware, getTeacherCourses);
 routes.post('/teacher/forgot-password', forgotPasswordTeacher);
 
 routes.get('/courses/listAll', listCourses);
-routes.get('/courses/list-students',listStudentsCourses);
+routes.get('/courses/list-students', listStudentsCourses);
 routes.post('/courses/create', authUserMiddleware, saveCourse);
 routes.put('/courses/update', authUserMiddleware, updateCourse);
 
@@ -127,8 +127,8 @@ routes.post('/course/getById', getCoursesById);
 
 
 // Shopping Cart
-routes.get('/course/buy/listAll', authUserMiddleware, listCart);
+routes.post('/course/buy/listAll', authUserMiddleware, listCart);
 routes.post('/course/buy/create-cart', authUserMiddleware, createCart);
 routes.put('/course/buy/finish', authUserMiddleware, finishBuy);
-routes.delete('/course/buy/delete-item', authUserMiddleware, deleteItem);
+routes.post('/course/buy/delete-item', authUserMiddleware, deleteItem);
 export default routes;
