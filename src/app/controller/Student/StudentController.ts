@@ -13,8 +13,8 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "linklearninc@gmail.com",
-        pass: "Linklearn123"
+        user: "",
+        pass: ""
     },
     tls: {
         rejectUnauthorized: false
@@ -41,7 +41,7 @@ export const saveUserStudent = async (request: Request, response: Response) => {
     const student = repository.create(request.body)
     const userStudent = await repository.save(student);
     transporter.sendMail({
-        from: 'LinkLearn <457f7a1349-e88ec1@inbox.mailtrap.io>',
+        from: 'LinkLearn <>',
         to: email,
         subject: 'Bem Vindo a LinkLearn',
         html: `<p>Olá ${request.body.name}, seja bem vindo ao LinkLearn.</p><br>
@@ -119,8 +119,8 @@ export const forgotPassword = async (request: Request, response: Response) => {
             port: 587,
             secure: false,
             auth: {
-                user: "linklearninc@gmail.com",
-                pass: "Linklearn123"
+                user: "",
+                pass: ""
             },
             tls: {
                 rejectUnauthorized: false
@@ -130,7 +130,7 @@ export const forgotPassword = async (request: Request, response: Response) => {
         const newPassword = crypto.randomBytes(4).toString('HEX')
 
         transporter.sendMail({
-            from: 'LinkLearn <457f7a1349-e88ec1@inbox.mailtrap.io>',
+            from: 'LinkLearn <>',
             to: email,
             subject: 'Recuperação de Senha',
             html: `<p>Olá, sua nova senha para acessar o portal é: ${newPassword}</p><br><a href="http://localhost:3000/">LinkLearn</a>`,

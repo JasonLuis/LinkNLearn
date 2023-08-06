@@ -135,8 +135,8 @@ export const forgotPasswordTeacher = async (
       port: 587,
       secure: false,
       auth: {
-        user: "linklearninc@gmail.com",
-        pass: "Linklearn123",
+        user: "",
+        pass: "",
       },
       tls: {
         rejectUnauthorized: false,
@@ -147,7 +147,7 @@ export const forgotPasswordTeacher = async (
 
     transporter
       .sendMail({
-        from: "LinkLearn <457f7a1349-e88ec1@inbox.mailtrap.io>",
+        from: "LinkLearn <>",
         to: email,
         subject: "Recuperação de Senha",
         html: `<p>Olá, sua nova senha para acessar o portal é: ${newPassword}</p><br><a href="http://localhost:3000/">LinkLearn</a>`,

@@ -1,10 +1,10 @@
 {
    "type": "postgres",
-   "host": "localhost",
-   "port": 5432,
-   "username": "postgres",
-   "password": "root",
-   "database": "linknlearnfinal",
+   "host": "",
+   "port": 0,
+   "username": "",
+   "password": "",
+   "database": "",
    "entities": [
       "src/app/models/*.ts"
    ],

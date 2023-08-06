@@ -13,8 +13,8 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "linklearninc@gmail.com",
-        pass: "Linklearn123"
+        user: "",
+        pass: ""
     },
     tls: {
         rejectUnauthorized: false
@@ -233,7 +233,7 @@ export const finishBuy = async (request: Request, response: Response) => {
         const buy = repoStudentCourses.create(body as any);
         const buyCourses = await repoStudentCourses.save(buy);
         transporter.sendMail({
-            from: 'LinkLearn <457f7a1349-e88ec1@inbox.mailtrap.io>',
+            from: 'LinkLearn <>',
             to: email,
             subject: `Bem Vindo ao curso de ${title}`,
             html: `<p>Olá ${name}, parabens por ter adquirido o curso de ${title}.</p><br>
